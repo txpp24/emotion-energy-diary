@@ -1,0 +1,15 @@
+{
+  "appId": "com.emotionenergy.diary",
+  "appName": "情绪能量日记",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "buildOptions": {
+      "keystorePath": "android.keystore",
+      "keystoreAlias": "emotion-energy-diary"
+    }
+  }
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#667eea">
+    <title>情绪能量日记</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>情绪能量日记</h1>
+            <p class="subtitle">记录当下，治愈自己</p>
+            <button id="themeToggle" class="theme-toggle" title="切换主题">🌙</button>
+        </header>
+
+        <div class="quote-section">
+            <div class="quote-box">
+                <p id="dailyQuote" class="quote-text"></p>
+                <button id="newQuoteBtn" class="icon-btn" title="换一句">✨</button>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab-home">
+                <div class="home-section">
+                    <div class="home-welcome">
+                        <h2 class="home-title">今天感觉如何？</h2>
+                        <p class="home-subtitle">记录此刻，让心情得到释放</p>
+                    </div>
+                    <div class="home-status">
+                        <div class="status-item">
+                            <span class="status-label">今日记录</span>
+                            <span class="status-value" id="todayRecordStatus">未记录</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">今日平均能量</span>
+                            <span class="status-value" id="todayAvgEnergy">--</span>
+                        </div>
+                    </div>
+                    <button id="quickRecordBtn" class="quick-record-btn">✨ 记录此刻</button>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab-record">
+                <div class="record-section">
+                    <div class="form-group">
+                        <label>选择情绪 <button id="manageEmotionsBtn" class="manage-emotions-btn"
+                                title="管理情绪">⚙️</button></label>
+                        <div class="emotion-tags" id="emotionTags">
+                            <button class="emotion-btn" data-emotion="开心"><span class="emoji">😊</span><span
+                                    class="label">开心</span></button>
+                            <button class="emotion-btn" data-emotion="平静"><span class="emoji">😌</span><span
+                                    class="label">平静</span></button>
+                            <button class="emotion-btn" data-emotion="焦虑"><span class="emoji">😰</span><span
+                                    class="label">焦虑</span></button>
+                            <button class="emotion-btn" data-emotion="愤怒"><span class="emoji">😠</span><span
+                                    class="label">愤怒</span></button>
+                            <button class="emotion-btn" data-emotion="悲伤"><span class="emoji">😢</span><span
+                                    class="label">悲伤</span></button>
+                            <button class="emotion-btn" data-emotion="疲惫"><span class="emoji">😴</span><span
+                                    class="label">疲惫</span></button>
+                            <button class="emotion-btn" data-emotion="兴奋"><span class="emoji">🤩</span><span
+                                    class="label">兴奋</span></button>
+                            <button class="emotion-btn" data-emotion="困惑"><span class="emoji">😕</span><span
+                                    class="label">困惑</span></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>能量值 (1-10)</label>
+                        <div class="energy-slider">
+                            <input type="range" id="energyValue" min="1" max="10" value="5">
+                            <div class="energy-display">
+                                <span id="energyNumber">5</span>
+                                <div class="energy-labels">
+                                    <span>低</span>
+                                    <span>高</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>触发原因</label>
+                        <input type="text" id="triggerReason" placeholder="用一句话描述..." maxlength="100">
+                    </div>
+
+                    <button id="saveBtn" class="save-btn main-action-btn">✨ 记录此刻</button>
+                    <div id="healingFeedback" class="healing-feedback"></div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab-trend">
+                <div class="trend-section">
+                    <div class="stats-section">
+                        <h2>数据统计</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon stat-icon-energy">⚡</div>
+                                <div class="stat-value" id="avgEnergy">--</div>
+                                <div class="stat-label">平均能量</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon stat-icon-emotion">💜</div>
+                                <div class="stat-value" id="commonEmotion">--</div>
+                                <div class="stat-label">常见情绪</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon stat-icon-streak">🔥</div>
+                                <div class="stat-value" id="streakDays">--</div>
+                                <div class="stat-label">连续天数</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon stat-icon-records">📊</div>
+                                <div class="stat-value" id="totalRecords">--</div>
+                                <div class="stat-label">总记录数</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-section">
+                        <div class="chart-header">
+                            <h2>能量趋势</h2>
+                            <div class="chart-controls">
+                                <button class="chart-btn active" data-period="day">日</button>
+                                <button class="chart-btn" data-period="week">周</button>
+                                <button class="chart-btn" data-period="month">月</button>
+                            </div>
+                        </div>
+                        <div class="chart-info" id="chartInfo">显示最近7天的数据</div>
+                        <div class="chart-container">
+                            <canvas id="energyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab-settings">
+                <div class="settings-section">
+                    <div class="settings-list">
+                        <div class="settings-item">
+                            <div class="settings-item-info">
+                                <span class="settings-item-icon">💾</span>
+                                <span class="settings-item-label">本地存储说明</span>
+                            </div>
+                            <span class="settings-item-desc">数据仅存储在本地</span>
+                        </div>
+
+                        <div class="settings-item">
+                            <div class="settings-item-info">
+                                <span class="settings-item-icon">📤</span>
+                                <span class="settings-item-label">数据导出 (CSV)</span>
+                            </div>
+                            <button id="exportCSVBtn" class="settings-action-btn">导出</button>
+                        </div>
+
+                        <div class="settings-item">
+                            <div class="settings-item-info">
+                                <span class="settings-item-icon">🌙</span>
+                                <span class="settings-item-label">深色模式</span>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-item">
+                            <div class="settings-item-info">
+                                <span class="settings-item-icon">📋</span>
+                                <span class="settings-item-label">历史记录</span>
+                            </div>
+                            <button id="viewHistoryBtn" class="settings-action-btn">查看</button>
+                        </div>
+
+                        <div class="settings-item">
+                            <div class="settings-item-info">
+                                <span class="settings-item-icon">ℹ️</span>
+                                <span class="settings-item-label">关于应用</span>
+                            </div>
+                            <span class="settings-item-desc">版本 1.0.0</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-footer">
+                        <p class="disclaimer">这是一个本地情绪记录工具，不替代任何医疗或心理建议。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="tab-history">
+                <div class="history-section">
+                    <div class="history-header">
+                        <h2>历史记录</h2>
+                        <div class="history-actions">
+                            <button id="backToSettingsBtn" class="back-btn">← 返回</button>
+                            <div class="export-dropdown">
+                                <button id="exportBtn" class="export-btn">导出数据 ▼</button>
+                                <div class="export-menu">
+                                    <button id="exportCSV" class="export-menu-item">导出CSV</button>
+                                    <button id="exportJSON" class="export-menu-item">导出JSON</button>
+                                </div>
+                            </div>
+                            <button id="importBtn" class="import-btn">导入数据</button>
+                            <input type="file" id="importFile" accept=".json" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="history-list" id="historyList">
+                        <p class="empty-message">还没有记录，开始记录你的情绪吧~</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <button class="bottom-nav-item active" data-tab="home">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">首页</span>
+            </button>
+            <button class="bottom-nav-item" data-tab="record">
+                <span class="nav-icon">📝</span>
+                <span class="nav-text">记录</span>
+            </button>
+            <button class="bottom-nav-item" data-tab="trend">
+                <span class="nav-icon">📈</span>
+                <span class="nav-text">趋势</span>
+            </button>
+            <button class="bottom-nav-item" data-tab="settings">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">设置</span>
+            </button>
+        </nav>
+
+        <div id="emotionModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>管理情绪标签</h3>
+                    <button class="modal-close" id="closeEmotionModal">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="add-emotion">
+                        <input type="text" id="newEmotionName" placeholder="情绪名称" maxlength="10">
+                        <input type="text" id="newEmotionEmoji" placeholder="表情" maxlength="2">
+                        <button id="addEmotionBtn" class="add-emotion-btn">添加</button>
+                    </div>
+                    <div class="emotion-list" id="emotionList"></div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+        <script src="app.js"></script>
+</body>
+
+</html>

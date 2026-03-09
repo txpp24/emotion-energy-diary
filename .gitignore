@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+Thumbs.db
+*.lock
+package-lock.json
+android/.gradle/
+android/build/
+android/app/build/
+android/capacitor-cordova-android-plugins/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android-sdk-license
+android-sdk-preview-license
+setup-licenses.ps1
